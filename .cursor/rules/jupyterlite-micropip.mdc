@@ -1,0 +1,28 @@
+---
+description: "JupyterLite/Pyodide 双环境依赖安装：本地跳过、网页端自动安装"
+globs: ["**/*.ipynb", "**/content/**"]
+alwaysApply: false
+---
+
+# JupyterLite 依赖安装规则
+
+当 notebook 需同时支持**本地 Jupyter** 和 **JupyterLite/Pyodide** 时，在 notebook 首 cell 使用以下写法：
+
+```python
+try:
+    import micropip
+    await micropip.install(['matplotlib', 'numpy', 'pint'])
+except ImportError:
+    pass
+```
+
+- **本地**：无 `micropip`，`ImportError` 后 `pass`，不报错
+- **JupyterLite**：有 `micropip`，执行安装
+
+备选（按环境检测）：
+```python
+import sys
+if 'pyodide' in sys.modules:
+    import micropip
+    await micropip.install(['matplotlib', 'numpy', 'pint'])
+```

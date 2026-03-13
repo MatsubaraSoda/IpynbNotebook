@@ -115,6 +115,7 @@ dmypy.json
 *.doit.db
 _output
 
+# 项目说明：说明.mdc 纳入版本控制，不忽略
 
 # 其它
 其它/
